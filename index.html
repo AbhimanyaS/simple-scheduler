@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Scheduler</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interview Scheduler</h1>
+        <form id="schedulerForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required><br>
+            <label for="username">UserName:</label>
+            <input type="text" id="username" required><br>
+            
+            <label for="password">password:</label>
+            <input type="password" id="password" required><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required><br>
+            <label for="domain">Domain Of Interview:</label>
+            <select id="domain">
+                <option value="data-science">Data Science</option>
+                <option value="machine-learning">Machine Learning</option>
+                <option value="artificial-intelligence">Artificial Intelligence</option>
+                <option value="software-engineering">Software Engineering</option>
+                <option value="cyber-security">Cyber Security</option>
+                <!-- Add more options as needed -->
+            </select><br>
+        
+            <label for="date">Date:</label>
+            <input type="date" id="date" required><br>
+            <label for="time">Time:</label>
+            <input type="time" id="time" required><br>
+            <button type="submit">Schedule</button>
+        </form>
+        
+    </div>
+    <div id="scheduleList" class="subcontainer">
+       
+    </div>
+
+    <script src=" https://smtpjs.com/v3/smtp.js">
+
+    </script>
+    
+
+
+    <script>document.getElementById('schedulerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var date = document.getElementById('date').value;
+        var time = document.getElementById('time').value;
+        var scheduleList = document.getElementById('scheduleList');
+        var domain = document.getElementById('domain').value; 
+        
+        var listItem = document.createElement('ul');
+        listItem.innerHTML = '<strong>Name:</strong> ' + name + '<br><strong>Email:</strong> ' + email + '<br><strong>Date:</strong> ' + date + '<br><strong>Time:</strong> ' + time + '<br><strong>Domain:</strong> ' + domain;
+        scheduleList.appendChild(listItem);
+        
+        schedulerForm.value="";
+        savedata();
+        sendEmail(); 
+        
+    
+    });
+    
+    function savedata(){
+        localStorage.setItem("data", scheduleList.innerHTML);
+    
+    }
+    
+    function showtask(){
+        scheduleList.innerHTML=localStorage.getItem("data");
+    
+    }
+    function sendEmail(){
+            Email.send({
+    Host : "smtp.elasticemail.com",
+    Username : "abhimanya0104@gmail.com",
+    Password : "8A0AC16A0B2A9D02C39E03E82C5D5BD45B88",
+    To :document.getElementById("email").value,
+    From : "abhimanya0104@gmail.com",  
+    Subject : "new meeting scheduled",
+    Body : "meeting link:"
+}).then(
+  message => alert(message)
+);
+}
+    showtask();
+    </script>
+</body>
+</html>
